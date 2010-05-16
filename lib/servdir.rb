@@ -9,27 +9,38 @@ require 'haml'
 
 class Servdir
     def initialize
-        @template_file = 'public/index.haml'
-        @template = File.open(@template_file, 'r').read
     end
 
-    def make_html
-    haml = 
+    def make_html(dir)
+        haml=<<EOF
+!!! XHTML
+%html{ :xmlns => "http://www.w3.org/1999/xhtml", "xml:lang" => "en"}
+  %head
+    %meta{ "http-equiv" => "content-type", :content => "text/xhtml" }
+    %link{ :rel => "stylesheet", :type => "text/css", :href => "public/style.css"}
+    %title Index of #{dir}
+  %body
+    #header
+      %h2 Index of #{dir}
+    #content
+      - Dir.entries("#{dir}").each do |file|
+        - path = "file://#{dir}/" + file
+        %p
+          %a(title=file){:href => path }= file
+EOF
 
-	def serve(dir, port)
-        files = Dir.entries(dir)
-        files.each do |file|
-            @template << "      %p\n        %a(title='#{dir}'){:href => '#{file}' }'#{file}'\n"
-        end
-        engine = Haml::Engine.new(@template)
+        engine = Haml::Engine.new(haml)
         index_file = engine.render
-        index_file.gsub!(/DIR/, dir)
         File.open('public/index.html', 'w') do |file|
             file.puts index_file
         end
+    end
+
+	def serve
         s = WEBrick::HTTPServer.new(
-                :Port => port,
-                :DocumentRoot => 'public/index.html'
+                :Port => 2000,
+                :DocumentRoot => 'public',
+                :FancyIndexing => true
             )
         trap("INT"){ s.shutdown }
         s.start
@@ -37,5 +48,6 @@ class Servdir
 
 end
 
-s = Servdir.new
-s.serve('/home/doug/', 2000)
+#s = Servdir.new
+#s.make_html("/home/doug/work")
+#s.serve
