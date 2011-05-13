@@ -4,7 +4,6 @@
 # The main purpose of this script is to temporarily serve videos
 # for streaming.  Just hit <ctrl-c> to exit.
 
-require 'webrick'
 require 'optparse'
 require 'servdir'
 

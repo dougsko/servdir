@@ -15,8 +15,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "servdir"
   gem.homepage = "http://github.com/dougsko/servdir"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Quickly and easily serve a directory or file over HTTP.}
+  gem.description = %Q{Quickly and easily serve a directory or file over HTTP.}
   gem.email = "dougtko@gmail.com"
   gem.authors = ["Doug P."]
   # Include your dependencies below. Runtime dependencies are required when using your gem,
