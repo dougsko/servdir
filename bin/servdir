@@ -15,8 +15,7 @@ opts = OptionParser.new do |opts|
 	opts.separator "Options:"
 
     opts.on("-d [dir]", "--directory [dir]", String,
-            "The directory you want to serve.  
-            You can also serve a single file.") do |d|
+            "The directory you want to serve. You can also serve a single file.") do |d|
                 options[:dir] = d
     end
 				
