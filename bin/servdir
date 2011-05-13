@@ -6,7 +6,7 @@
 
 require 'webrick'
 require 'optparse'
-require 'lib/servdir'
+require 'servdir'
 
 options = {:port => 2000, :dir => "."}
 opts = OptionParser.new do |opts|
@@ -21,7 +21,7 @@ opts = OptionParser.new do |opts|
                 options[:dir] = d
     end
 				
-    opts.on("-p [port]", "--port <port>", String,
+    opts.on("-p [port]", "--port [port]", String,
             "Port number, default is 2000") do |p|
                 options[:port] = p.to_i
     end
