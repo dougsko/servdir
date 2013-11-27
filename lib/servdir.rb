@@ -3,19 +3,15 @@
 # Serves the files in a folder over HTTP
 #
 
-require 'webrick'
+require 'thin'
+require 'rack'
+require 'socket'
 
 class Servdir
-    def initialize(dir = ".", port = 2000)
-        @dir = dir
-        @port = port
-
-        s = WEBrick::HTTPServer.new(
-                :Port => @port,
-                :DocumentRoot => @dir,
-                :FancyIndexing => true
-            )
-        trap("INT"){ s.shutdown }
-        s.start
-	end	
+	def initialize(dir, port)
+		Thin::Server.start("0.0.0.0", port) do
+			#use Rack::CommonLogger
+			run Rack::Directory.new(dir)
+		end
+	end
 end

@@ -7,28 +7,31 @@
 require 'optparse'
 require 'servdir'
 
-options = {:port => 2000, :dir => "."}
-opts = OptionParser.new do |opts|
-    opts.banner =  "\nUse Webrick to serve a directory or a file over HTTP \n
-                    Usage: servdir.rb [-d dir] [-p port]"
-    opts.separator ""
+options = {}
+cliopts = OptionParser.new do |opts|
+	opts.banner =  "\nUse Webrick to serve a directory or a file over HTTP \n
+					Usage: servdir.rb [-d dir] [-p port]"
+	opts.separator ""
 	opts.separator "Options:"
 
-    opts.on("-d [dir]", "--directory [dir]", String,
-            "The directory you want to serve. You can also serve a single file.") do |d|
-                options[:dir] = d
-    end
-				
-    opts.on("-p [port]", "--port [port]", String,
-            "Port number, default is 2000") do |p|
-                options[:port] = p.to_i
-    end
+	options[:dir] = Dir.pwd
+	opts.on("-d [dir]", "--directory [dir]", String,
+			"The directory you want to serve. You can also serve a single file.") do |d|
+				options[:dir] = d
+	end
 
-    opts.on_tail("-h", "--help", "Show this message") do
-        puts opts
-        exit
-    end
+	options[:port] = 2000
+	opts.on("-p [port]", "--port [port]", String,
+			"Port number, default is 2000") do |p|
+				options[:port] = p.to_i
+	end
+
+	opts.on_tail("-h", "--help", "Show this message") do
+		puts opts
+		exit
+	end
 end
-    
-opts.parse(ARGV)
+
+cliopts.parse(ARGV)
+
 Servdir.new(options[:dir], options[:port])
