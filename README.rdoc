@@ -1,6 +1,6 @@
 = servdir
 
-Quickly and easily serve a directory or file over HTTP.
+Quickly serve a directory or file over HTTP.
 
 == Contributing to servdir
  

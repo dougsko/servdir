@@ -1,22 +1,20 @@
 #!/usr/bin/env ruby
 #
-# Serves a directory over HTTP
-# The main purpose of this script is to temporarily serve videos
-# for streaming.  Just hit <ctrl-c> to exit.
+# Serves a directory or file over HTTP.
+# Just hit <ctrl-c> to exit.
 
 require 'optparse'
 require 'servdir'
 
 options = {}
 cliopts = OptionParser.new do |opts|
-	opts.banner =  "\nUse Webrick to serve a directory or a file over HTTP \n
-					Usage: servdir.rb [-d dir] [-p port]"
+	opts.banner =  "\nServdir uses Thin to serve a directory over HTTP\n"
 	opts.separator ""
 	opts.separator "Options:"
 
 	options[:dir] = Dir.pwd
-	opts.on("-d [dir]", "--directory [dir]", String,
-			"The directory you want to serve. You can also serve a single file.") do |d|
+	opts.on("-d [dir|file]", "--directory [dir|file]", String,
+			"The directory or file you want to serve.") do |d|
 				options[:dir] = d
 	end
 

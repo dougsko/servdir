@@ -11,7 +11,11 @@ class Servdir
 	def initialize(dir, port)
 		Thin::Server.start("0.0.0.0", port) do
 			#use Rack::CommonLogger
-			run Rack::Directory.new(dir)
+			if File.directory?(dir)
+				run Rack::Directory.new(dir)
+			elsif File.file?(dir)
+				run Rack::File.new(dir)
+			end
 		end
 	end
 end
